@@ -1,5 +1,5 @@
 # Oh My Posh Profile Version
-$profileVersion = '3.11.8-dev'
+$profileVersion = '3.11.12-local-dev'
 
 # GitHub Repository Details
 $gitRepositoryUrl = "https://api.github.com/repos/smoonlee/dev-posh-profile-updater/releases/latest"
@@ -27,8 +27,7 @@ if ($profileVersion -ne $newProfileReleaseTag) {
 }
 
 # Load Oh My Posh Application
-(@(& "$Env:LOCALAPPDATA\Programs\oh-my-posh\bin\oh-my-posh.exe" init pwsh --config="$Env:LOCALAPPDATA\Programs\oh-my-posh\themes\quick-term-smoon.omp.json" --print) -join "
-") | Invoke-Expression
+oh-my-posh init powershell --config "$Env:LOCALAPPDATA\Programs\oh-my-posh\themes\themeNameHere" | Invoke-Expression
 
 # Local Oh-My-Posh Configuration
 $env:POSH_AZURE_ENABLED = $true
