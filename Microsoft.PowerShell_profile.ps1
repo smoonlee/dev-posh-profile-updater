@@ -48,7 +48,7 @@ Version: 3.1.12 - July 2024 | Update-PSProfile YAML Improvements for Dev Build a
 
 #>
 # Oh My Posh Profile Version
-$profileVersion = '3.1.11.18-dev'
+$profileVersion = '3.1.11.18.1-dev'
 
 # GitHub Repository Details
 $gitRepositoryUrl = "https://api.github.com/repos/smoonlee/dev-posh-profile-updater/releases"
