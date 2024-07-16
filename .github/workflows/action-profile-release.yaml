@@ -1,11 +1,11 @@
-name: 'Action - Auto Release Builder' 
+name: 'Action - Auto Release Scheduler' 
 
 on:
   pull_request:
-    types: [ labeled ]
-
+   types: [ closed ]
+   
 jobs:
-  build:
+  create_release:
     if: ${{ github.event.label.name == 'updated-profile-release' }}
     runs-on: ubuntu-latest
 
@@ -32,8 +32,9 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.REPO_TOKEN }}
+          release_name: ${{ env.profileVersion }}
+          tag: ${{ env.profileVersion }}          
           file: Microsoft.PowerShell_profile.ps1
           asset_name: Microsoft.PowerShell_profile.ps1
-          tag: ${{ env.profileVersion }}
-          overwrite: true
           body: "This is my release text"
+          overwrite: true
