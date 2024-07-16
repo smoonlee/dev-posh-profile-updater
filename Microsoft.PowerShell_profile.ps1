@@ -47,7 +47,7 @@ Version: 3.1.11 - July 2024 | Created Update-PSProfile Function, Script Refactor
 
 #>
 # Oh My Posh Profile Version
-$profileVersion = '3.1.11.9-dev'
+$profileVersion = '3.1.11.10-dev'
 
 # GitHub Repository Details
 $gitRepositoryUrl = "https://api.github.com/repos/smoonlee/dev-posh-profile-updater/releases"
@@ -218,12 +218,14 @@ function Get-AzSystemUptime {
     }
 }
 
+# Function - Reload PSProfile
 function Register-PSProfile {
     Clear-Host
     # https://stackoverflow.com/questions/11546069/refreshing-restarting-powershell-session-w-out-exiting
     Get-Process -Id $PID | Select-Object -ExpandProperty Path | ForEach-Object { Invoke-Command { & "$_" } -NoNewScope }
 }
 
+# Function - Download PSProfile [Prod] or [Dev] Release
 function Get-PSProfileUpdate {
     param (
         [string] $profileRelease,
@@ -243,6 +245,9 @@ function Get-PSProfileUpdate {
     $pwshProfile = Get-Content -Path $PROFILE
     $pwshProfile = $pwshProfile.Replace('themeNameHere', $pwshThemeName)
     $pwshProfile | Set-Content -Path $PROFILE -Force
+
+    # Reload PowerShell Profile
+    Register-PSProfile
 }
 
 # Function - Update PowerShell Profile
@@ -260,16 +265,13 @@ function Update-PSProfile {
 
         # Get Latest Profile Release
         Get-PSProfileUpdate -profileRelease $newProfilePreReleaseTag -profileDownloadUrl $newProfilePreReleaseUrl
+
         return
     }
 
     # Get Latest Profile Release
     Get-PSProfileUpdate -profileRelease $newProfileReleaseTag -profileDownloadUrl $newProfileReleaseUrl
-
-    # Reload PowerShell Profile
-    Register-PSProfile
 }
-
 
 # Function - Update WinGet Applications
 function Update-WindowsApps {
