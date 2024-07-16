@@ -301,8 +301,8 @@ function installWinGetApplications {
 }
 
 function setPwshProfile {
-    $poshThemeUrl = "https://raw.githubusercontent.com/smoonlee/oh-my-posh-profile/main/quick-term-smoon.omp.json"
-    $poshThemeName = Split-Path -Path $poshThemeUrl -Leaf
+    $poshTheme = "$PSScriptRoot\quick-term-smoon.omp.json"
+    $poshThemeName = Split-Path -Path $poshTheme -Leaf
 
     Write-Output `r "[OhMyPoshProfile $scriptVersion] :: Downloading Oh-My-Posh Profile: [$poshThemeName]"
     Invoke-WebRequest -Uri $poshThemeUrl -OutFile "$Env:LOCALAPPDATA\Programs\oh-my-posh\themes\$poshThemeName"
@@ -323,7 +323,7 @@ function setPwshProfile {
         }
     }
 
-    $pwshProfile = Get-Content -Path $PSScriptRoot\Microsoft.PowerShell_profile.ps1
+    $pwshProfile = Get-Content -Path "$PSScriptRoot\Microsoft.PowerShell_profile.ps1"
     $pwshProfile = $pwshProfile.Replace('themeNameHere', $poshThemeName)
     $pwshProfile | Set-Content -Path $pwshProfilePath -Force
 
@@ -332,9 +332,9 @@ function setPwshProfile {
 function setWindowsTerminal {
     Write-Output `r "[OhMyPoshProfile $scriptVersion] :: Updating Windows Terminal Configuration"
 
-    $settingJsonUrl = "https://raw.githubusercontent.com/smoonlee/oh-my-posh-profile/main/windows-terminal-settings.json"
+    $settingJson = "$PSScriptRoot\windows-terminal-settings.json"
     $localSettingsPath = "$Env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
-    Invoke-WebRequest -Uri $settingJsonUrl -OutFile $localSettingsPath
+    Copy-Item -Uri $settingJson -OutFile $localSettingsPath -Force
 
     $startDirectory = 'C:\Code'
     if (!(Test-Path -Path $startDirectory)) {
