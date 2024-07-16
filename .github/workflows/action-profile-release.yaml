@@ -1,4 +1,4 @@
-name: CI
+name: 'Action - Auto Release Builder' 
 
 on:
   pull_request:
