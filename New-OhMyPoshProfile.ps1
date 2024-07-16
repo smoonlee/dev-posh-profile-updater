@@ -48,7 +48,7 @@ Version: 3.1.11 - July 2024 | Created Update-PSProfile Function, Script Refactor
 #>
 
 # Oh My Posh Profile Version
-$profileVersion = '3.1.11'
+$profileVersion = '3.1.12'
 
 # GitHub Repository Details
 $gitRepositoryUrl = "https://api.github.com/repos/smoonlee/dev-posh-profile-updater/releases/latest"
