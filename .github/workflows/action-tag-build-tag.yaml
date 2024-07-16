@@ -28,7 +28,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
         run: |
-          if [[ "${{ github.event.pull_request.title }}" != *"dev"* ]]; then
+          if [[ "${{ github.event.pull_request.title }}" == *"prod"* ]]; then
             PR_NUMBER=${{ github.event.pull_request.number }}
             curl -s -H "Authorization: token $GITHUB_TOKEN" \
                  -X POST \
