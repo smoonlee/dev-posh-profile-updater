@@ -1,5 +1,5 @@
 # Oh My Posh Profile Version
-$profileVersion = '3.11-dev'
+$profileVersion = '3.11.1-dev'
 
 # GitHub Repository Details
 $gitRepositoryUrl = "https://api.github.com/repos/smoonlee/dev-posh-profile-updater/releases/latest"
