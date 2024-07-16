@@ -1,0 +1,25 @@
+name: Auto Tag Pull Request
+
+on:
+  pull_request:
+    types: [opened, edited, reopened]
+
+jobs:
+  add-tag:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4.1.7
+
+      - name: Add tag to PR if title contains 'dev'
+        env:
+          GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
+        run: |
+          if [[ "${{ github.event.pull_request.title }}" == *"dev"* ]]; then
+            PR_NUMBER=${{ github.event.pull_request.number }}
+            curl -s -H "Authorization: token $GITHUB_TOKEN" \
+                 -X POST \
+                 -H "Accept: application/vnd.github.v3+json" \
+                 https://api.github.com/repos/${{ github.repository }}/issues/$PR_NUMBER/labels \
+                 -d '{"labels":["updated-profile-release-dev"]}'
+          fi
