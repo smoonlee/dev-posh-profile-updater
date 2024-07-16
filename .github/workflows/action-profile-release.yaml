@@ -34,7 +34,7 @@ jobs:
         with:
           repo_token: ${{ secrets.REPO_TOKEN }}
           release_name: ${{ env.profileVersion }}
-          tag: ${{ env.profileVersion }}
+          tag: ${{ env.profileVersion }}-dev
           file: Microsoft.PowerShell_profile.ps1
           asset_name: Microsoft.PowerShell_profile.ps1
           body: ${{ github.event.pull_request.body }}
