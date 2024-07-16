@@ -24,6 +24,10 @@ jobs:
                  -d '{"labels":["updated-profile-release-dev"]}'
           fi
 
+      - name: Add tag to PR if title contains 'prod'
+        env:
+          GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
+        run: |
           if [[ "${{ github.event.pull_request.title }}" == *"prod"* ]]; then
             PR_NUMBER=${{ github.event.pull_request.number }}
             curl -s -H "Authorization: token $GITHUB_TOKEN" \
@@ -33,6 +37,10 @@ jobs:
                  -d '{"labels":["updated-profile-release-prod"]}'
           fi          
 
+      - name: Merge Pull request
+        env:
+          GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
+        run: |
            # Merge the PR        
             MERGE_RESPONSE=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
                  -X PUT \
