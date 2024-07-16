@@ -33,7 +33,7 @@ jobs:
         with:
           repo_token: ${{ secrets.REPO_TOKEN }}
           file: Microsoft.PowerShell_profile.ps1
-          asset_name: mything
+          asset_name: Microsoft.PowerShell_profile.ps1
           tag: ${{ env.profileVersion }}
           overwrite: true
           body: "This is my release text"
