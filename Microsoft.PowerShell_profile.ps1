@@ -23,7 +23,7 @@ Runs the script to update and configure the PowerShell profile.
 .NOTES
 - This script requires an internet connection to retrieve the latest Oh My Posh profile from GitHub.
 - Make sure to have the required PowerShell modules (Posh-Git, Terminal-Icons, PSReadLine) installed before running this script.
-- The script assumes that the Oh My Posh theme file is located in the specified path: $Env:LOCALAPPDATA\Programs\oh-my-posh\themes\themeNameHere.
+- The script assumes that the Oh My Posh theme file is located in the specified path: $env:LOCALAPPDATA\Programs\oh-my-posh\themes\themeNameHere.
 
 Author: Simon Lee
 Version: 3.0 - May 2024 | Mk3 Profile Script Created
@@ -48,7 +48,7 @@ Version: 3.1.12 - July 2024 | Update-PSProfile YAML Improvements for Dev Build a
 
 #>
 # Oh My Posh Profile Version
-$profileVersion = '3.1.11.17.1-dev'
+$profileVersion = '3.1.11.17.2-dev'
 
 # GitHub Repository Details
 $gitRepositoryUrl = "https://api.github.com/repos/smoonlee/dev-posh-profile-updater/releases"
@@ -76,7 +76,7 @@ if ($profileVersion -ne $newProfileReleaseTag) {
 }
 
 # Load Oh My Posh Application
-oh-my-posh init powershell --config " $env:POSH_THEMES_PATH\themeNameHere" | Invoke-Expression
+oh-my-posh init powershell --config "$env:POSH_THEMES_PATH\themeNameHere" | Invoke-Expression
 
 # Local Oh-My-Posh Configuration
 $env:POSH_AZURE_ENABLED = $true
@@ -234,7 +234,7 @@ function Get-PSProfileUpdate {
     )
 
     # Get Current Pwsh Theme
-    $pwshThemeName = Split-Path $Env:POSH_THEME -Leaf
+    $pwshThemeName = Split-Path $env:POSH_THEME -Leaf
 
     Write-Output "Updating PowerShell Profile..." `r
     Write-Output "Current Profile Version: $profileVersion"
