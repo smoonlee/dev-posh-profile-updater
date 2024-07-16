@@ -1,5 +1,6 @@
 # Oh My Posh Profile Version
-$profileVersion = '3.11.2-dev'
+$profileVersion = '3.11.3-dev'
+
 
 # GitHub Repository Details
 $gitRepositoryUrl = "https://api.github.com/repos/smoonlee/dev-posh-profile-updater/releases/latest"
@@ -22,7 +23,7 @@ Set-PSReadLineKeyHandler -Key UpArrow -Function HistorySearchBackward
 Set-PSReadLineKeyHandler -Key DownArrow -Function HistorySearchForward
 
 # Profile Update Checker
-if ($profileVersion -ne $newProfileRelease) {
+if ($profileVersion -ne $newProfileReleaseTag) {
     Write-Warning "[Oh My Posh] - Profile Update Available, Please run: Update-PSProfile"
 }
 
