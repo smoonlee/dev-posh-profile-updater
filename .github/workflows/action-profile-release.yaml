@@ -10,6 +10,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4.1.7
-    - name: Run a one-line script
-      run: echo Hello, world!
+      - uses: actions/checkout@v4.1.7
+      
+      - name: Check Directory Contents
+        run: |
+          pwd
+          ls 
+
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: target/release/mything
+          asset_name: mything
+          tag: ${{ github.ref }}
+          overwrite: true
+          body: "This is my release text"
