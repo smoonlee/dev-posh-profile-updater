@@ -28,6 +28,9 @@ jobs:
           echo "profileVersion=${profileVersion}"
           echo "profileVersion=${profileVersion}" >> $GITHUB_ENV
           
+      - name: Get PR Body
+        run: echo "PR_BODY=${{ github.event.pull_request.body }}" >> $GITHUB_ENV
+
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v2
         with:
@@ -36,5 +39,5 @@ jobs:
           tag: ${{ env.profileVersion }}          
           file: Microsoft.PowerShell_profile.ps1
           asset_name: Microsoft.PowerShell_profile.ps1
-          body: "This is my release text"
+          body: ${{ env.PR_BODY }}
           overwrite: true
