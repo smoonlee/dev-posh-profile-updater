@@ -47,7 +47,7 @@ Version: 3.1.11 - July 2024 | Created Update-PSProfile Function, Script Refactor
 
 #>
 # Oh My Posh Profile Version
-$profileVersion = '3.1.11'
+$profileVersion = '3.1.11.1'
 
 # GitHub Repository Details
 $gitRepositoryUrl = "https://api.github.com/repos/smoonlee/dev-posh-profile-updater/releases/latest"
@@ -233,6 +233,9 @@ function Update-PSProfile {
     Write-Output "Updating Profile..."
     Invoke-WebRequest -Uri $newProfileReleaseUrl -OutFile $PROFILE
 
+    # Sleep for Reading 
+    Start-Sleep -Seconds '2'
+    
     # Reload PowerShell Profile
     Register-PSProfile
 }
