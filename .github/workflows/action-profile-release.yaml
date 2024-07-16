@@ -38,6 +38,7 @@ jobs:
           file: Microsoft.PowerShell_profile.ps1
           asset_name: Microsoft.PowerShell_profile.ps1
           body: ${{ github.event.pull_request.body }}
+          prerelease: true
           overwrite: true
           
       - name: Upload binaries to release [Prod]
@@ -50,4 +51,4 @@ jobs:
           file: Microsoft.PowerShell_profile.ps1
           asset_name: Microsoft.PowerShell_profile.ps1
           body: ${{ github.event.pull_request.body }}
-          overwrite: true
+          overwrite: false
