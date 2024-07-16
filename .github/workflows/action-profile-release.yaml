@@ -6,7 +6,7 @@ on:
    
 jobs:
   create_release:
-    if: ${{ github.event.pull_request.merged && contains(github.event.pull_request.labels.*.name, 'updated-profile-release') }}
+    if: ${{ github.event.pull_request.merged }}
     runs-on: ubuntu-latest
 
     steps:
@@ -28,12 +28,25 @@ jobs:
           echo "profileVersion=${profileVersion}"
           echo "profileVersion=${profileVersion}" >> $GITHUB_ENV
 
-      - name: Upload binaries to release
+      - name: Upload binaries to release [Dev]
+        if: contains(github.event.pull_request.labels.*.name, 'updated-profile-release-dev')
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.REPO_TOKEN }}
           release_name: ${{ env.profileVersion }}
-          tag: ${{ env.profileVersion }}          
+          tag: ${{ env.profileVersion }}
+          file: Microsoft.PowerShell_profile.ps1
+          asset_name: Microsoft.PowerShell_profile.ps1
+          body: ${{ github.event.pull_request.body }}
+          overwrite: true
+          
+      - name: Upload binaries to release [Prod]
+        if: contains(github.event.pull_request.labels.*.name, 'updated-profile-release-prod')
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.REPO_TOKEN }}
+          release_name: ${{ env.profileVersion }}
+          tag: ${{ env.profileVersion }}
           file: Microsoft.PowerShell_profile.ps1
           asset_name: Microsoft.PowerShell_profile.ps1
           body: ${{ github.event.pull_request.body }}
