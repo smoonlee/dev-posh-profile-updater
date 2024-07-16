@@ -11,6 +11,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4.1.7
+        with:
+          sparse-checkout: |
+            Microsoft.PowerShell_profile.ps1
       
       - name: Check Directory Contents
         run: |
