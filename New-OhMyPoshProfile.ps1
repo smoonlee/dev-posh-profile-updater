@@ -305,7 +305,6 @@ function setPwshProfile {
     $poshThemeName = Split-Path -Path $poshTheme -Leaf
 
     Write-Output `r "[OhMyPoshProfile $scriptVersion] :: Downloading Oh-My-Posh Profile: [$poshThemeName]"
-    Invoke-WebRequest -Uri $poshThemeUrl -OutFile "$Env:LOCALAPPDATA\Programs\oh-my-posh\themes\$poshThemeName"
 
     Write-Output `r "[OhMyPoshProfile $scriptVersion] :: Creating PowerShell Profile"
 
@@ -334,7 +333,7 @@ function setWindowsTerminal {
 
     $settingJson = "$PSScriptRoot\windows-terminal-settings.json"
     $localSettingsPath = "$Env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
-    Copy-Item -Uri $settingJson -OutFile $localSettingsPath -Force
+    Copy-Item -Path $settingJson -Destination $localSettingsPath -Force
 
     $startDirectory = 'C:\Code'
     if (!(Test-Path -Path $startDirectory)) {
