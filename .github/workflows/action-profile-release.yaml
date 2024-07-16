@@ -24,7 +24,7 @@ jobs:
       - name: Extract profileVersion
         id: extract_version
         run: |
-          profileVersion=$(grep '\$profileVersion' Microsoft.PowerShell_profile.ps1 | sed "s/.*= '\(.*\)'/\1/")
+          profileVersion=$(grep -oP '\$profileVersion\s*=\s*'\''\K[^'\'']+ Microsoft.PowerShell_profile.ps1)
           echo "profileVersion=${profileVersion}"
           echo "profileVersion=${profileVersion}" >> $GITHUB_ENV
           
