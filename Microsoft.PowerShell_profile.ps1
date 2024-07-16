@@ -48,7 +48,7 @@ Version: 3.1.12 - July 2024 | Update-PSProfile YAML Improvements for Dev Build a
 
 #>
 # Oh My Posh Profile Version
-$profileVersion = '3.1.11.17'
+$profileVersion = '3.1.11.17.1-dev'
 
 # GitHub Repository Details
 $gitRepositoryUrl = "https://api.github.com/repos/smoonlee/dev-posh-profile-updater/releases"
@@ -76,7 +76,7 @@ if ($profileVersion -ne $newProfileReleaseTag) {
 }
 
 # Load Oh My Posh Application
-oh-my-posh init powershell --config "$Env:LOCALAPPDATA\Programs\oh-my-posh\themes\themeNameHere" | Invoke-Expression
+oh-my-posh init powershell --config " $env:POSH_THEMES_PATH\themeNameHere" | Invoke-Expression
 
 # Local Oh-My-Posh Configuration
 $env:POSH_AZURE_ENABLED = $true
