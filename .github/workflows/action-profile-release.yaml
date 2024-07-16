@@ -2,7 +2,7 @@ name: 'Action - Auto Release Scheduler'
 
 on:
   pull_request:
-   types: [ closed ]
+   types: [closed]
    
 jobs:
   create_release:
