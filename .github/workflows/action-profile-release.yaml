@@ -15,19 +15,25 @@ jobs:
           sparse-checkout: |
             Microsoft.PowerShell_profile.ps1
           sparse-checkout-cone-mode: false
-  
-      
+          
       - name: Check Directory Contents
         run: |
           pwd
           ls 
 
+      - name: Extract profileVersion
+        id: extract_version
+        run: |
+          profileVersion=$(grep '\$profileVersion' yourfile.txt | sed "s/.*= '\(.*\)'/\1/")
+          echo "profileVersion=${profileVersion}"
+          echo "profileVersion=${profileVersion}" >> $GITHUB_ENV
+          
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.REPO_TOKEN }}
           file: $PWD/Microsoft.PowerShell_profile.ps1
           asset_name: mything
-          tag: ${{ github.ref }}
+          tag: ${{ env.profileVersion }}
           overwrite: true
           body: "This is my release text"
