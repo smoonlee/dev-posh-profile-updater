@@ -48,7 +48,7 @@ Version: 3.1.12 - July 2024 | Update-PSProfile YAML Improvements for Dev Build a
 
 #>
 # Oh My Posh Profile Version
-$profileVersion = '3.1.11.14'
+$profileVersion = '3.1.11.15-dev'
 
 # GitHub Repository Details
 $gitRepositoryUrl = "https://api.github.com/repos/smoonlee/dev-posh-profile-updater/releases"
@@ -258,7 +258,7 @@ function Update-PSProfile {
     )
 
     if ($devMode) {
-        Write-Output "Do Dev things"
+        Write-Warning "[Oh My Posh] - Development Build Profile Update!!"
         $newProfileReleases = Invoke-RestMethod -Uri $gitRepositoryUrl
         $newProfilePreRelease = $newProfileReleases | Where-Object { $_.prerelease -eq $true } | Sort-Object -Property published_at -Descending
         $newProfilePreReleaseTag = $newProfilePreRelease[0].tag_name
