@@ -47,7 +47,7 @@ Version: 3.1.11 - July 2024 | Created Update-PSProfile Function, Script Refactor
 
 #>
 # Oh My Posh Profile Version
-$profileVersion = '3.1.11.1'
+$profileVersion = '3.1.11.3'
 
 # GitHub Repository Details
 $gitRepositoryUrl = "https://api.github.com/repos/smoonlee/dev-posh-profile-updater/releases/latest"
@@ -233,9 +233,12 @@ function Update-PSProfile {
     Write-Output "Updating Profile..."
     Invoke-WebRequest -Uri $newProfileReleaseUrl -OutFile $PROFILE
 
-    # Sleep for Reading 
-    Start-Sleep -Seconds '2'
-    
+    $pwshProfile = Get-Content -Path "$PSScriptRoot\Microsoft.PowerShell_profile.ps1"
+    $pwshThemeName = Split-Path $Env:POSH_THEME -Leaf
+    $pwshProfile = $pwshProfile.Replace('themeNameHere', $pwshThemeName)
+    $pwshProfile | Set-Content -Path $pwshProfilePath -Force
+
+
     # Reload PowerShell Profile
     Register-PSProfile
 }
