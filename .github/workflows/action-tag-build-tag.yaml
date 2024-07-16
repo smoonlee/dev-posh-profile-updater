@@ -9,44 +9,43 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out the repository
-        uses: actions/checkout@v4.1.7
+        uses: actions/checkout@v4
 
-      - name: Add tag to PR if title contains 'dev'
+      - name: Add tags to PR based on the branch name
         env:
           GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
         run: |
-          if [[ "${{ github.event.pull_request.head.ref }}" == *"dev"* ]]; then
-            PR_NUMBER=${{ github.event.pull_request.number }}
-            curl -s -H "Authorization: token $GITHUB_TOKEN" \
-                 -X POST \
-                 -H "Accept: application/vnd.github.v3+json" \
-                 https://api.github.com/repos/${{ github.repository }}/issues/$PR_NUMBER/labels \
-                 -d '{"labels":["updated-profile-release-dev"]}'
+          PR_NUMBER=${{ github.event.pull_request.number }}
+          BRANCH_NAME=${{ github.event.pull_request.head.ref }}
+          
+          if [[ "$BRANCH_NAME" == *"dev"* ]]; then
+            TAG="updated-profile-release-dev"
+          elif [[ "$BRANCH_NAME" == *"prod"* ]]; then
+            TAG="updated-profile-release-prod"
           fi
 
-      - name: Add tag to PR if title contains 'prod'
-        env:
-          GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
-        run: |
-          if [[ "${{ github.event.pull_request.head.ref }}" == *"prod"* ]]; then
-            PR_NUMBER=${{ github.event.pull_request.number }}
+          if [[ -n "$TAG" ]]; then
             curl -s -H "Authorization: token $GITHUB_TOKEN" \
                  -X POST \
                  -H "Accept: application/vnd.github.v3+json" \
                  https://api.github.com/repos/${{ github.repository }}/issues/$PR_NUMBER/labels \
-                 -d '{"labels":["updated-profile-release-prod"]}'
-          fi          
+                 -d "{\"labels\":[\"$TAG\"]}"
+          fi
 
-      - name: Merge Pull request
+      - name: Merge Pull Request
         env:
           GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
         run: |
-           # Merge the PR        
-            PR_NUMBER=${{ github.event.pull_request.number }}
-            MERGE_RESPONSE=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
+          PR_NUMBER=${{ github.event.pull_request.number }}
+          MERGE_RESPONSE=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
                  -X PUT \
                  -H "Accept: application/vnd.github.v3+json" \
                  https://api.github.com/repos/${{ github.repository }}/pulls/$PR_NUMBER/merge \
                  -d '{"commit_message":"Executing Release Build","merge_method":"merge"}')
 
-            echo "Merge response: $MERGE_RESPONSE"
+          echo "Merge response: $MERGE_RESPONSE"
+
+          if [[ "$(echo "$MERGE_RESPONSE" | jq -r .merged)" != "true" ]]; then
+            echo "Merge failed: $(echo "$MERGE_RESPONSE" | jq -r .message)"
+            exit 1
+          fi
