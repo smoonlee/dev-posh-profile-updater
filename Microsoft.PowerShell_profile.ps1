@@ -1,5 +1,10 @@
 # Oh My Posh Profile Version
-$profileVersion = 'dev-3.11-0-pr-test-17'
+$profileVersion = '3.11-dev'
+
+# GitHub Repository Details
+$gitRepositoryUrl = "https://api.github.com/repos/smoonlee/dev-posh-profile-updater/releases/latest"
+$newProfileReleaseTag = $(Invoke-RestMethod -Uri $gitRepositoryUrl).tag_name
+$newProfileReleaseUrl = $(Invoke-RestMethod -Uri $gitRepositoryUrl).assets.browser_download_url
 
 # Import PowerShell Modules
 Import-Module -Name 'Posh-Git'
@@ -15,6 +20,11 @@ Set-PSReadLineOption -HistorySearchCursorMovesToEnd
 Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete
 Set-PSReadLineKeyHandler -Key UpArrow -Function HistorySearchBackward
 Set-PSReadLineKeyHandler -Key DownArrow -Function HistorySearchForward
+
+# Profile Update Checker
+if ($profileVersion -ne $newProfileRelease) {
+    Write-Warning "[Oh My Posh] - Profile Update Available, Please run: Update-PSProfile"
+}
 
 # Load Oh My Posh Application
 (@(& "$Env:LOCALAPPDATA\Programs\oh-my-posh\bin\oh-my-posh.exe" init pwsh --config="$Env:LOCALAPPDATA\Programs\oh-my-posh\themes\quick-term-smoon.omp.json" --print) -join "
@@ -165,6 +175,19 @@ function Get-AzSystemUptime {
 function Register-PSProfile {
     & $PROFILE
     Write-Warning "Powershell Profile Reloaded!"
+}
+
+# Function - Update PowerShell Profile
+function Update-PSProfile {
+    Write-Output "Updating PowerShell Profile..." `r
+    Write-Output "Current Profile Version: $profileVersion"
+    Write-Output "New Profile Version: $newProfileReleaseTag"
+
+    Write-Output "Updating Profile..."
+    Invoke-WebRequest -Uri $newProfileReleaseUrl -OutFile $PROFILE
+
+    # Reload Profile
+    Register-PSProfile
 }
 
 # Function - Update WinGet Applications
