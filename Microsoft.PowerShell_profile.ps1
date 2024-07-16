@@ -1,5 +1,5 @@
 # Oh My Posh Profile Version
-$profileVersion = '3.11.4-dev'
+$profileVersion = '3.11.5-dev'
 
 # GitHub Repository Details
 $gitRepositoryUrl = "https://api.github.com/repos/smoonlee/dev-posh-profile-updater/releases/latest"
@@ -180,7 +180,12 @@ function Update-PSProfile {
     Write-Output "Updating Profile..."
     Invoke-WebRequest -Uri $newProfileReleaseUrl -OutFile $PROFILE
 
-    & $PROFILE
+    #
+    Register-Profile
+}
+
+function Register-Profile {
+    Get-Process -Id $PID | Select-Object -ExpandProperty Path | ForEach-Object { Invoke-Command { & "$_" } -NoNewScope }
 }
 
 # Function - Update WinGet Applications
