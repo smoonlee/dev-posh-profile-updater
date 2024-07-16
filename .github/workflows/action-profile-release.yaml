@@ -32,7 +32,7 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.REPO_TOKEN }}
-          file: $PWD/Microsoft.PowerShell_profile.ps1
+          file: Microsoft.PowerShell_profile.ps1
           asset_name: mything
           tag: ${{ env.profileVersion }}
           overwrite: true
