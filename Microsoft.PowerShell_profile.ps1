@@ -75,7 +75,7 @@ if ($profileVersion -ne $newProfileReleaseTag) {
 }
 
 # Load Oh My Posh Application
-oh-my-posh init powershell --config "$Env:LOCALAPPDATA\Programs\oh-my-posh\themes\themeNameHere" | Invoke-Expression
+oh-my-posh init powershell --config "$Env:LOCALAPPDATA\Programs\oh-my-posh\themes\quick-term-smoon.omp.json" | Invoke-Expression
 
 # Local Oh-My-Posh Configuration
 $env:POSH_AZURE_ENABLED = $true
