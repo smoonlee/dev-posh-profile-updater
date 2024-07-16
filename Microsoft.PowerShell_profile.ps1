@@ -1,6 +1,5 @@
 # Oh My Posh Profile Version
-$profileVersion = '3.11.3-dev'
-
+$profileVersion = '3.11.4-dev'
 
 # GitHub Repository Details
 $gitRepositoryUrl = "https://api.github.com/repos/smoonlee/dev-posh-profile-updater/releases/latest"
@@ -172,12 +171,6 @@ function Get-AzSystemUptime {
     }
 }
 
-# Function - Register PowerShell Profile
-function Register-PSProfile {
-    & $PROFILE
-    Write-Warning "Powershell Profile Reloaded!"
-}
-
 # Function - Update PowerShell Profile
 function Update-PSProfile {
     Write-Output "Updating PowerShell Profile..." `r
@@ -187,8 +180,7 @@ function Update-PSProfile {
     Write-Output "Updating Profile..."
     Invoke-WebRequest -Uri $newProfileReleaseUrl -OutFile $PROFILE
 
-    # Reload Profile
-    Register-PSProfile
+    & $PROFILE
 }
 
 # Function - Update WinGet Applications
