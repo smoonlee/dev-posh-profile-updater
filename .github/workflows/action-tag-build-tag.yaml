@@ -42,6 +42,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
         run: |
            # Merge the PR        
+            PR_NUMBER=${{ github.event.pull_request.number }}
             MERGE_RESPONSE=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
                  -X PUT \
                  -H "Accept: application/vnd.github.v3+json" \
