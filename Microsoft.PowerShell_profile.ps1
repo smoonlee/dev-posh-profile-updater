@@ -1,5 +1,53 @@
+<#
+.SYNOPSIS
+This PowerShell script is used to update and configure the PowerShell profile with Oh My Posh and other modules.
+
+.DESCRIPTION
+The script performs the following tasks:
+- Retrieves the latest version of the Oh My Posh profile from a GitHub repository.
+- Imports required PowerShell modules (Posh-Git, Terminal-Icons, PSReadLine).
+- Configures PSReadLine options for enhanced command line editing.
+- Checks if a profile update is available and displays a warning message if necessary.
+- Loads the Oh My Posh application with a specified theme.
+- Sets environment variables for Azure and Git integration.
+- Defines functions for retrieving public IP address, Azure CLI tab completion, system uptime, Azure virtual machine system uptime, and more.
+- Provides functions for updating the PowerShell profile, updating Windows applications, cleaning Git branches, and retrieving DNS record information.
+
+.PARAMETER None
+This script does not accept any parameters.
+
+.EXAMPLE
+.\Microsoft.PowerShell_profile.ps1
+Runs the script to update and configure the PowerShell profile.
+
+.NOTES
+- This script requires an internet connection to retrieve the latest Oh My Posh profile from GitHub.
+- Make sure to have the required PowerShell modules (Posh-Git, Terminal-Icons, PSReadLine) installed before running this script.
+- The script assumes that the Oh My Posh theme file is located in the specified path: $Env:LOCALAPPDATA\Programs\oh-my-posh\themes\themeNameHere.
+
+Author: Simon Lee
+Version: 3.0 - May 2024 | Mk3 Profile Script Created
+Version: 3.1 - May 2024 | Updated Get-AzSystemUptime Function check Machine state [Running] [Offline]
+Version: 3.1.1 - May 2024 | Updated updateVSCodePwshModule to check for source folder and return is missing
+Version: 3.1.2 - May 2024 | Fixed PSReadLine Module Update for PowerShell 5, Moved code block to wrong location 🤦‍♂️
+Version: 3.1.3 - May 2024 | Created Update-WindowsApps functions, Wrapper for winget upgrade --all --include-unknown --force
+Version: 3.1.4 - May 2024 | Created Remove-GitBranch function, Wrapper for git branch -D and PSPROFILE reflow
+Version: 3.1.5 - May 2024 | Corrected dateTime stamp for last reboot time in Get-SystemUptime Get-AzSystemUptime function
+Version: 3.1.5.1 - May 2024 | Fix Type for Remove-GitBranch Function to remove '* main' and '* master'
+Version: 3.1.6 - May 2024 | Fixed AzCLI AutoTab (added missing function back - https://learn.microsoft.com/en-us/cli/azure/install-azure-cli-windows?tabs=azure-cli#enable-tab-completion-in-powershell)
+Version: 3.1.7 - May 2024 | Fixed updateVSCodePwshModule, Renamed to patchVSCodePwshModule and updated FolderName to get only latest folder
+Version: 3.1.8 - June 2024 | Adding Get-DnsResult Function
+Version: 3.1.8.1 - June 2024 | Rename Get-PublicIPAddress to Get-MyPublicIP
+Version: 3.1.9 - July 2024 | Created Get AKS Version Function
+Version: 3.1.10 - July 2024 | Updated Remove-GitBranch Function (Code Clean Up with ChatGPT)
+Version: 3.1.10.1 - July 2024 | Updated Remove-GitBranch Function (added defaultBranch parameter) + Code Formatting Clean Up
+Version: 3.1.10.2 - July 2024 | Code Formatting Patch
+Version: 3.1.10.3 - July 2024 | Updated Remove-GitBranch Function - Update Branch CleanUp - defaultBranch x main
+Version: 3.1.11 - July 2024 | Created Update-PSProfile Function, Script Refactor and YAML Release Pipeline created for Profile Versioning
+
+#>
 # Oh My Posh Profile Version
-$profileVersion = '3.11.12-local-dev'
+$profileVersion = '3.1.11-dev'
 
 # GitHub Repository Details
 $gitRepositoryUrl = "https://api.github.com/repos/smoonlee/dev-posh-profile-updater/releases/latest"
@@ -227,7 +275,8 @@ function Remove-GitBranch {
         Write-Output `r "[Git] :: Moving to main branch"
         if ($defaultBranch) {
             git checkout $defaultBranch
-        } else {
+        }
+        else {
             git checkout main
         }
 
@@ -235,7 +284,8 @@ function Remove-GitBranch {
         foreach ($branch in $allBranches) {
             git branch -D $branch
         }
-    } else {
+    }
+    else {
         # Remove specific branch
         git branch -D $branchName
     }

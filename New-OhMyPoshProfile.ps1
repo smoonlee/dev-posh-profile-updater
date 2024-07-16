@@ -1,36 +1,21 @@
 <#
 .SYNOPSIS
-This script creates a new OhMyPosh profile.
+This script performs system validation and installs necessary dependencies for Oh My Posh.
 
 .DESCRIPTION
-The New-OhMyPoshProfile.ps1 script is used to create a new OhMyPosh profile. OhMyPosh is a theme engine for PowerShell that provides a customizable prompt with various features and themes.
+The script checks the installation locations of Visual Studio Code and PowerShell 7. It also checks the version of WinGet and installs the latest version if necessary. Additionally, it installs a Nerd Font and PowerShell modules required by Oh My Posh.
 
-.PARAMETER None
-This script does not accept any parameters.
+.PARAMETER nerdFontFileName
+The name of the Nerd Font file to be installed.
 
 .EXAMPLE
-.\New-OhMyPoshProfile.ps1
-Creates a new OhMyPosh profile.
+.\New-OhMyPoshProfile.ps1 -nerdFontFileName 'CascadiaCode.zip'
+This example runs the script and installs the Nerd Font with the specified file name.
 
 .NOTES
-Author: Simon Lee
-Version: 3.0 - May 2024 | Mk3 Profile Script Created
-Version: 3.1 - May 2024 | Updated Get-AzSystemUptime Function check Machine state [Running] [Offline]
-Version: 3.1.1 - May 2024 | Updated updateVSCodePwshModule to check for source folder and return is missing
-Version: 3.1.2 - May 2024 | Fixed PSReadLine Module Update for PowerShell 5, Moved code block to wrong location 🤦‍♂️
-Version: 3.1.3 - May 2024 | Created Update-WindowsApps functions, Wrapper for winget upgrade --all --include-unknown --force
-Version: 3.1.4 - May 2024 | Created Remove-GitBranch function, Wrapper for git branch -D and PSPROFILE reflow
-Version: 3.1.5 - May 2024 | Corrected dateTime stamp for last reboot time in Get-SystemUptime Get-AzSystemUptime function
-Version: 3.1.5.1 - May 2024 | Fix Type for Remove-GitBranch Function to remove '* main' and '* master'
-Version: 3.1.6 - May 2024 | Fixed AzCLI AutoTab (added missing function back - https://learn.microsoft.com/en-us/cli/azure/install-azure-cli-windows?tabs=azure-cli#enable-tab-completion-in-powershell)
-Version: 3.1.7 - May 2024 | Fixed updateVSCodePwshModule, Renamed to patchVSCodePwshModule and updated FolderName to get only latest folder
-Version: 3.1.8 - June 2024 | Adding Get-DnsResult Function
-Version: 3.1.8.1 - June 2024 | Rename Get-PublicIPAddress to Get-MyPublicIP
-Version: 3.1.9 - July 2024 | Created Get AKS Version Function
-Version: 3.1.10 - July 2024 | Updated Remove-GitBranch Function (Code Clean Up with ChatGPT)
-Version: 3.1.10.1 - July 2024 | Updated Remove-GitBranch Function (added defaultBranch parameter) + Code Formatting Clean Up
-Version: 3.1.10.2 - July 2024 | Code Formatting Patch
-Version: 3.1.10.3 - July 2024 | Updated Remove-GitBranch Function - Update Branch CleanUp - defaultBranch x main
+Author: Simon Lee - @smoonlee
+Date: July 2024
+Version: Oh My Posh - Setup Script v3
 #>
 
 #Requires -RunAsAdministrator
