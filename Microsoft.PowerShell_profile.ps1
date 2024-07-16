@@ -47,7 +47,7 @@ Version: 3.1.11 - July 2024 | Created Update-PSProfile Function, Script Refactor
 
 #>
 # Oh My Posh Profile Version
-$profileVersion = '3.1.11.6-dev'
+$profileVersion = '3.1.11.7-dev'
 
 # GitHub Repository Details
 $gitRepositoryUrl = "https://api.github.com/repos/smoonlee/dev-posh-profile-updater/releases"
@@ -255,8 +255,8 @@ function Update-PSProfile {
         Write-Output "Do Dev things"
         $newProfileReleases = Invoke-RestMethod -Uri $gitRepositoryUrl
         $newProfilePreRelease = $newProfileReleases | Where-Object { $_.prerelease -eq $true } | Sort-Object -Property published_at -Descending
-        $newProfilePreReleaseTag = $newProfilePreRelease.tag_name
-        $newProfilePreReleaseUrl = $newProfilePreRelease.assets.browser_download_url
+        $newProfilePreReleaseTag = $newProfilePreRelease[0].tag_name
+        $newProfilePreReleaseUrl = $newProfilePreRelease[0].assets.browser_download_url
 
         # Get Latest Profile Release
         Get-PSProfileUpdate -profileRelease $newProfilePreReleaseTag -profileDownloadUrl $newProfilePreReleaseUrl
