@@ -1,5 +1,5 @@
 # Oh My Posh Profile Version
-$profileVersion = '3.11.5-dev'
+$profileVersion = '3.11.6-dev'
 
 # GitHub Repository Details
 $gitRepositoryUrl = "https://api.github.com/repos/smoonlee/dev-posh-profile-updater/releases/latest"
@@ -180,11 +180,13 @@ function Update-PSProfile {
     Write-Output "Updating Profile..."
     Invoke-WebRequest -Uri $newProfileReleaseUrl -OutFile $PROFILE
 
-    #
+    # Reload PowerShell Profile
     Register-Profile
 }
 
 function Register-Profile {
+    Clear-Host
+    // https://stackoverflow.com/questions/11546069/refreshing-restarting-powershell-session-w-out-exiting
     Get-Process -Id $PID | Select-Object -ExpandProperty Path | ForEach-Object { Invoke-Command { & "$_" } -NoNewScope }
 }
 
