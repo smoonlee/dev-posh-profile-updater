@@ -24,10 +24,10 @@ jobs:
       - name: Extract profileVersion
         id: extract_version
         run: |
-          profileVersion=$(grep -oP '\$profileVersion\s*=\s*'\''\K[^'\'']+ Microsoft.PowerShell_profile.ps1)
+          profileVersion=$(grep -o "\$profileVersion = '[^']*'" Microsoft.PowerShell_profile.ps1 | sed "s/\$profileVersion = '//; s/'//")
           echo "profileVersion=${profileVersion}"
           echo "profileVersion=${profileVersion}" >> $GITHUB_ENV
-          
+
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v2
         with:
