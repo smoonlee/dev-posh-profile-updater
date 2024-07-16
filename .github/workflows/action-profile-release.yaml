@@ -14,6 +14,8 @@ jobs:
         with:
           sparse-checkout: |
             Microsoft.PowerShell_profile.ps1
+          sparse-checkout-cone-mode: false
+  
       
       - name: Check Directory Contents
         run: |
