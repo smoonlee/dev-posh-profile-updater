@@ -1,5 +1,5 @@
 # Oh My Posh Profile Version
-$profileVersion = '3.11.6-dev'
+$profileVersion = '3.11.8-dev'
 
 # GitHub Repository Details
 $gitRepositoryUrl = "https://api.github.com/repos/smoonlee/dev-posh-profile-updater/releases/latest"
@@ -171,6 +171,12 @@ function Get-AzSystemUptime {
     }
 }
 
+function Register-PSProfile {
+    Clear-Host
+    # https://stackoverflow.com/questions/11546069/refreshing-restarting-powershell-session-w-out-exiting
+    Get-Process -Id $PID | Select-Object -ExpandProperty Path | ForEach-Object { Invoke-Command { & "$_" } -NoNewScope }
+}
+
 # Function - Update PowerShell Profile
 function Update-PSProfile {
     Write-Output "Updating PowerShell Profile..." `r
@@ -181,13 +187,7 @@ function Update-PSProfile {
     Invoke-WebRequest -Uri $newProfileReleaseUrl -OutFile $PROFILE
 
     # Reload PowerShell Profile
-    Register-Profile
-}
-
-function Register-Profile {
-    Clear-Host
-    // https://stackoverflow.com/questions/11546069/refreshing-restarting-powershell-session-w-out-exiting
-    Get-Process -Id $PID | Select-Object -ExpandProperty Path | ForEach-Object { Invoke-Command { & "$_" } -NoNewScope }
+    Register-PSProfile
 }
 
 # Function - Update WinGet Applications
