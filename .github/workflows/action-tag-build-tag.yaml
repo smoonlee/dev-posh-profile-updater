@@ -49,4 +49,3 @@ jobs:
                  -d '{"commit_message":"Executing Release Build","merge_method":"merge"}')
 
             echo "Merge response: $MERGE_RESPONSE"
-            fi
