@@ -47,7 +47,7 @@ Version: 3.1.11 - July 2024 | Created Update-PSProfile Function, Script Refactor
 
 #>
 # Oh My Posh Profile Version
-$profileVersion = '3.1.11.10-dev'
+$profileVersion = '3.1.11.11-dev'
 
 # GitHub Repository Details
 $gitRepositoryUrl = "https://api.github.com/repos/smoonlee/dev-posh-profile-updater/releases"
@@ -75,7 +75,7 @@ if ($profileVersion -ne $newProfileReleaseTag) {
 }
 
 # Load Oh My Posh Application
-oh-my-posh init powershell --config "$Env:LOCALAPPDATA\Programs\oh-my-posh\themes\quick-term-smoon.omp.json" | Invoke-Expression
+oh-my-posh init powershell --config "$Env:LOCALAPPDATA\Programs\oh-my-posh\themes\themeNameHere" | Invoke-Expression
 
 # Local Oh-My-Posh Configuration
 $env:POSH_AZURE_ENABLED = $true
