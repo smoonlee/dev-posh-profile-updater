@@ -1,5 +1,5 @@
 # Oh My Posh Profile Version
-$profileVersion = 'dev-3.11-0-pr-test-15'
+$profileVersion = 'dev-3.11-0-pr-test-16'
 
 # Import PowerShell Modules
 Import-Module -Name 'Posh-Git'
